@@ -1,0 +1,86 @@
+{
+  "name": "SFDCRNApp",
+  "version": "0.0.1",
+  "private": true,
+  "scripts": {
+    "start": "node node_modules/react-native/local-cli/cli.js start",
+    "test": "jest",
+    "flow": "flow",
+    "lint": "eslint '**/*.js'",
+    "postinstall": "bash post-install.sh",
+    "bundle_ios_dev": "node node_modules/react-native/local-cli/cli.js bundle --entry-file index.js --platform ios --dev true --bundle-output Apps-Bundled/SFDCRNApp.ios.jsbundle --assets-dest RN-iOS-Assets",
+    "bundle_android_dev": "node node_modules/react-native/local-cli/cli.js bundle --entry-file index.js --platform android --dev true --bundle-output Apps-Bundled/index.android.bundle --assets-dest Apps-Assets",
+    "bundle_ios": "node node_modules/react-native/local-cli/cli.js bundle --entry-file index.js --platform ios --dev false --bundle-output Apps-Bundled/SFDCRNApp.ios.jsbundle --assets-dest RN-iOS-Assets",
+    "bundle_android": "node node_modules/react-native/local-cli/cli.js bundle --entry-file index.js --platform android --dev false --bundle-output Apps-Bundled/index.android.bundle --assets-dest Apps-Assets"
+  },
+  "dependencies": {
+    "buffer": "^5.1.0",
+    "lodash": "^4.17.4",
+    "prop-types": "^15.6.1",
+    "react": "16.4.1",
+    "react-native": "0.56.0",
+    "react-native-force": "https://github.com/forcedotcom/SalesforceMobileSDK-ReactNative.git#v6.2.0",
+    "react-navigation": "2.16.0",
+    "rimraf": "2.6.2",
+    "whatwg-fetch": "1.1.1"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.0.0-beta",
+    "babel-core": "7.0.0-bridge.0",
+    "babel-eslint": "^8.2.5",
+    "babel-plugin-module-resolver": "^3.1.1",
+    "babel-preset-react-native": "5.0.2",
+    "enzyme": "^3.3.0",
+    "enzyme-adapter-react-16": "^1.1.1",
+    "enzyme-to-json": "^3.3.4",
+    "eslint": "^4.19.0",
+    "eslint-config-airbnb": "^17.1.0",
+    "eslint-plugin-babel": "^5.2.0",
+    "eslint-plugin-flowtype": "^2.50.0",
+    "eslint-plugin-import": "^2.14.0",
+    "eslint-plugin-jsx-a11y": "^6.1.1",
+    "eslint-plugin-react": "^7.11.1",
+    "eslint-plugin-react-native": "^3.3.0",
+    "eslint-plugin-standard": "^3.0.1",
+    "eslint-scope": "^4.0.0",
+    "flow-bin": "0.75.0",
+    "jest": "^23.6.0",
+    "jest-cli": "^23.6.0",
+    "jest-react-native": "^18.0.0",
+    "react-dom": "16.4.1",
+    "react-test-renderer": "16.4.1"
+  },
+  "sdkDependencies": {
+    "SalesforceMobileSDK-Android": "https://github.com/forcedotcom/SalesforceMobileSDK-Android.git#v6.2.0",
+    "SalesforceMobileSDK-iOS": "https://github.com/forcedotcom/SalesforceMobileSDK-iOS.git#v6.2.0"
+  },
+  "resolutions": {
+    "eslint-scope": "3.7.1"
+  },
+  "jest": {
+    "preset": "react-native",
+    "transform": {
+      "^.+\\.js$": "<rootDir>/node_modules/react-native/jest/preprocessor.js"
+    },
+    "transformIgnorePatterns": [
+      "node_modules/(?!(jest-)?react-native|react-navigation)"
+    ],
+    "modulePathIgnorePatterns": [
+      "node_modules/react-native-force"
+    ],
+    "coveragePathIgnorePatterns": [
+      "/node_modules/",
+      "/coverage/"
+    ],
+    "setupFiles": [
+      "<rootDir>/jestSetup.js"
+    ],
+    "snapshotSerializers": [
+      "enzyme-to-json/serializer"
+    ]
+  },
+  "eslintIgnore": [
+    "node_modules/**",
+    "coverage/**"
+  ]
+}

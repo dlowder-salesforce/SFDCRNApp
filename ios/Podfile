@@ -1,0 +1,108 @@
+source 'https://github.com/CocoaPods/Specs.git'
+source 'https://github.com/forcedotcom/SalesforceMobileSDK-iOS-Specs.git'
+
+platform :ios, "10.0"
+inhibit_all_warnings!
+
+def react_pods
+  react_native_path = '../node_modules/react-native'
+  pod 'React', :path => react_native_path, :subspecs => [
+    'Core',
+    'DevSupport',
+    'CxxBridge',
+    'RCTNetwork',
+    'RCTWebSocket', # needed for debugging
+    'RCTText',
+    'RCTVibration',
+    'RCTSettings',
+    'RCTPushNotification',
+    'RCTAnimation',
+    'RCTLinkingIOS',
+    'RCTImage',
+    'RCTGeolocation',
+    'RCTCameraRoll',
+    'RCTActionSheet'
+  ]
+  pod 'yoga', :path => react_native_path + '/ReactCommon/yoga'
+  pod 'Folly', :podspec => react_native_path + '/third-party-podspecs/Folly.podspec'
+  pod 'DoubleConversion', :podspec => react_native_path + '/third-party-podspecs/DoubleConversion.podspec'
+  pod 'glog', :podspec => react_native_path + '/third-party-podspecs/glog.podspec'
+end
+
+
+project 'SFDCRNApp.xcodeproj'
+target 'SFDCRNApp' do
+
+    react_pods
+    pod 'SalesforceAnalytics', :path => '../mobile_sdk/SalesforceMobileSDK-iOS'
+    pod 'SalesforceSDKCore', :path => '../mobile_sdk/SalesforceMobileSDK-iOS'
+    pod 'SmartStore', :path => '../mobile_sdk/SalesforceMobileSDK-iOS'
+    pod 'SmartSync', :path => '../mobile_sdk/SalesforceMobileSDK-iOS'
+    pod 'SalesforceReact', :path => '../mobile_sdk/SalesforceMobileSDK-iOS'
+    pod 'CocoaLumberjack'
+end
+
+def change_lines_in_file(file_path, &change)
+  print "Fixing #{file_path}...\n"
+
+  contents = []
+
+  file = File.open(file_path, 'r')
+  file.each_line do | line |
+    contents << line
+  end
+  file.close
+
+  File.open(file_path, 'w') do |f|
+    f.puts(change.call(contents))
+  end
+end
+
+
+post_install do |installer|
+# Fix for xcode9/fmdb/sqlcipher/cocoapod issue - see https://discuss.zetetic.net/t/ios-11-xcode-issue-implicit-declaration-of-function-sqlite3-key-is-invalid-in-c99/2198/27
+  print "SQLCipher: link Pods/Headers/sqlite3.h"
+  system "mkdir -p Pods/Headers/Private && ln -s ../../SQLCipher/sqlite3.h Pods/Headers/Private"
+
+	# https://github.com/CocoaPods/CocoaPods/issues/2292
+	installer.pods_project.targets.each do |target|
+		target.build_configurations.each do |config|
+			config.build_settings['TARGETED_DEVICE_FAMILY'] = "1,2"
+			config.build_settings['ENABLE_BITCODE'] = "YES"
+		end
+	end
+
+	# https://github.com/CocoaPods/CocoaPods/issues/7003  (XCode 9 App Icon missing)
+	installer.aggregate_targets.each do |target|
+		copy_pods_resources_path = "Pods/Target Support Files/#{target.name}/#{target.name}-resources.sh"
+		string_to_replace = '--compile "${BUILT_PRODUCTS_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}"'
+		assets_compile_with_app_icon_arguments = '--compile "${BUILT_PRODUCTS_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}" --app-icon "${ASSETCATALOG_COMPILER_APPICON_NAME}" --output-partial-info-plist "${BUILD_DIR}/assetcatalog_generated_info.plist"'
+		text = File.read(copy_pods_resources_path)
+		new_contents = text.gsub(string_to_replace, assets_compile_with_app_icon_arguments)
+		File.open(copy_pods_resources_path, "w") {|file| file.puts new_contents }
+	end
+
+    # Fix iOS 12 issue with SalesforceSDK
+    %x[echo '#define MD5_DIGEST_LENGTH CC_MD5_DIGEST_LENGTH' >> 'Pods/Target Support Files/SalesforceSDKCore/SalesforceSDKCore-prefix.pch']
+
+    react_native_path = '../node_modules/react-native'
+
+  # https://github.com/facebook/yoga/issues/711#issuecomment-374605785
+  change_lines_in_file(react_native_path + '/React/Base/Surface/SurfaceHostingView/RCTSurfaceSizeMeasureMode.h') do |lines|
+    unless lines[27].include?("#ifdef __cplusplus")
+      lines.insert(27, "#ifdef __cplusplus")
+      lines.insert(34, "#endif")
+    end
+    lines
+  end
+
+  # https://github.com/facebook/react-native/issues/13198
+  change_lines_in_file(react_native_path + '/Libraries/NativeAnimation/RCTNativeAnimatedNodesManager.h') do |lines|
+    lines.map { |line| line.include?("#import <RCTAnimation/RCTValueAnimatedNode.h>") ? '#import "RCTValueAnimatedNode.h"' : line }
+  end
+
+  # https://github.com/facebook/react-native/issues/16039
+  change_lines_in_file(react_native_path + '/Libraries/WebSocket/RCTReconnectingWebSocket.m') do |lines|
+    lines.map { |line| line.include?("#import <fishhook/fishhook.h>") ? '#import "fishhook.h"' : line }
+  end
+end
