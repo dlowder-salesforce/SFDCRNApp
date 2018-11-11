@@ -13,5 +13,5 @@ mkdir $APPICON_DIR
 cp appicon-contents.json $APPICON_DIR/Contents.json
 
 # Fix React Native version in Android build script
-sed -i '' 's/react-native:0.55.4/react-native:0.56.0/g;' mobile_sdk/SalesforceMobildSDK-Android/libs/SalesforceReact/build.gradle
+sed -i '' 's/react-native:0.55.4/react-native:0.56.0/g;' mobile_sdk/SalesforceMobileSDK-Android/libs/SalesforceReact/build.gradle
 
