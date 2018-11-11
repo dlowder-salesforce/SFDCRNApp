@@ -9,6 +9,9 @@ execSync('npm install', { stdio: [0, 1, 2] });
 const rimraf = require('rimraf');
 const packageJson = require('./package.json');
 
+console.log('Build JS bundle');
+execSync('npm run bundle_android_dev', { stdio: [0, 1, 2] });
+
 console.log('Installing sdk dependencies');
 const sdkDependency = 'SalesforceMobileSDK-Android';
 const repoUrlWithBranch = packageJson.sdkDependencies[sdkDependency];
