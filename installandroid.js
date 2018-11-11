@@ -21,17 +21,11 @@ const parts = repoUrlWithBranch.split('#'),
 const targetDir = path.join('mobile_sdk', sdkDependency);
 if (fs.existsSync(targetDir)) {
   console.log(
-    `${targetDir
-      } already exists - if you want to refresh it, please remove it and re-run install.js`
+    `${targetDir} already exists - if you want to refresh it, please remove it and re-run install.js`
   );
 } else {
   execSync(
-    `git clone --branch ${
-      branch
-      } --single-branch --depth 1 ${
-      repoUrl
-      } ${
-      targetDir}`,
+    `git clone --branch ${branch} --single-branch --depth 1 ${repoUrl} ${targetDir}`,
     { stdio: [0, 1, 2] }
   );
   rimraf.sync(path.join('mobile_sdk', 'salesforcemobilesdk-android', 'hybrid'));
@@ -39,3 +33,9 @@ if (fs.existsSync(targetDir)) {
     path.join('mobile_sdk', 'salesforcemobilesdk-android', 'libs', 'test')
   );
 }
+
+console.log('Fix React Native version in Android build script');
+execSync(
+  "sed -i '' 's/react-native:0.55.4/react-native:0.56.0/g;' mobile_sdk/SalesforceMobileSDK-Android/libs/SalesforceReact/build.gradle",
+  { stdio: [0, 1, 2] }
+);

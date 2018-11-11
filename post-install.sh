@@ -9,9 +9,6 @@ sed -i '' 's/SalesforceReact\"/SalesforceReactiOS\"/g;' mobile_sdk/SalesforceMob
 
 # Add missing app icon set needed for Xcode 10 compilation
 APPICON_DIR=mobile_sdk/SalesforceMobileSDK-iOS/shared/resources/SalesforceSDKAssets.xcassets/AppIcon.appiconset
-mkdir $APPICON_DIR
+mkdir -p $APPICON_DIR
 cp appicon-contents.json $APPICON_DIR/Contents.json
-
-# Fix React Native version in Android build script
-sed -i '' 's/react-native:0.55.4/react-native:0.56.0/g;' mobile_sdk/SalesforceMobileSDK-Android/libs/SalesforceReact/build.gradle
 
