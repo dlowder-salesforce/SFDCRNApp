@@ -39,3 +39,9 @@ execSync(
   "sed -i '' 's/react-native:0.55.4/react-native:0.56.0/g;' mobile_sdk/SalesforceMobileSDK-Android/libs/SalesforceReact/build.gradle",
   { stdio: [0, 1, 2] }
 );
+
+console.log('Fix name collision in package.json from the iOS and Android SDKs');
+execSync(
+  "sed -i \'\' \'s/SalesforceReact\"/SalesforceReactAndroid\"/g;\' mobile_sdk/SalesforceMobileSDK-Android/libs/SalesforceReact/package.json",
+  { stdio: [0, 1, 2] }
+);
