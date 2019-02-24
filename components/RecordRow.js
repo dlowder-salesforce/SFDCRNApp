@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Text, View } from 'react-native';
+import { View } from 'react-native';
 
 import RecordItem from './RecordItem';
 
@@ -15,13 +15,13 @@ const RecordRow = ({
   sectionIndex,
   rowIndex
 }) => {
-  let rowLabel = sectionIndex + ',' + rowIndex;
+  const rowLabel = `${sectionIndex},${rowIndex}`;
 
   return (
-    <View key={'row' + rowLabel}>
+    <View key={`row${rowLabel}`}>
       {row.items.map((item, i) => (
         <RecordItem
-          key={'RowItem' + rowLabel + ',' + i}
+          key={`RowItem${rowLabel},${i}`}
           mode={mode}
           editValues={editValues}
           picklists={picklists}

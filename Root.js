@@ -10,18 +10,16 @@ import recordviewer from './reducers';
 import RecordViewerWrapper from './containers/RecordViewerWrapper';
 import rootSaga from './sagas/rootSaga';
 
-let sagaMiddleware = createSagaMiddleware();
+const sagaMiddleware = createSagaMiddleware();
 
-let store = createStore(recordviewer, applyMiddleware(sagaMiddleware));
+const store = createStore(recordviewer, applyMiddleware(sagaMiddleware));
 
 sagaMiddleware.run(rootSaga);
 
-const Root = () => {
-  return (
-    <Provider store={store}>
-      <RecordViewerWrapper />
-    </Provider>
+const Root = () => (
+  <Provider store={store}>
+    <RecordViewerWrapper />
+  </Provider>
   );
-};
 
 export default Root;

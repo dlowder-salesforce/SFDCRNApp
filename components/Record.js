@@ -18,45 +18,43 @@ const Record = ({
   onSaveClick,
   onFieldValueUpdate,
   onFetchPicklist
-}) => {
-  return (
-    <ScrollView style={Styles.outerFrame}>
-      <View style={Styles.buttonBar}>
-        <RecordButton label="Back" onClick={onBackClick} />
-        <RecordButton
-          label="Delete"
-          onClick={() => onDeleteClick(creds, recordView.recordId)}
-        />
-        {mode === 'View' && (
-          <RecordButton
-            label="Edit"
-            onClick={() => onEditClick(creds, recordView.recordId)}
-          />
+}) => (
+  <ScrollView style={Styles.outerFrame}>
+    <View style={Styles.buttonBar}>
+      <RecordButton label="Back" onClick={onBackClick} />
+      <RecordButton
+        label="Delete"
+        onClick={() => onDeleteClick(creds, recordView.recordId)}
+      />
+      {mode === 'View' && (
+      <RecordButton
+        label="Edit"
+        onClick={() => onEditClick(creds, recordView.recordId)}
+      />
         )}
-        {mode === 'Edit' && (
-          <RecordButton
-            label="Save"
-            onClick={() =>
+      {mode === 'Edit' && (
+      <RecordButton
+        label="Save"
+        onClick={() =>
               onSaveClick(creds, recordView.recordId, recordView.editValues)
             }
-          />
+      />
         )}
-      </View>
-      {recordView.layouts.Full[mode].map((section, i) => (
-        <RecordSection
-          mode={mode}
-          key={'section' + i}
-          onFieldValueUpdate={onFieldValueUpdate}
-          onFetchPicklist={url => onFetchPicklist(creds, url)}
-          picklists={picklists}
-          editValues={recordView.editValues}
-          section={section}
-          index={i}
-        />
+    </View>
+    {recordView.layouts.Full[mode].map((section, i) => (
+      <RecordSection
+        mode={mode}
+        key={`section${i}`}
+        onFieldValueUpdate={onFieldValueUpdate}
+        onFetchPicklist={url => onFetchPicklist(creds, url)}
+        picklists={picklists}
+        editValues={recordView.editValues}
+        section={section}
+        index={i}
+      />
       ))}
-    </ScrollView>
+  </ScrollView>
   );
-};
 
 Record.propTypes = {
   creds: PropTypes.object.isRequired,

@@ -21,20 +21,20 @@ const record = (state = { record: undefined, mode: 'View' }, action) => {
         record: undefined
       };
     case 'UPDATE_FIELD_VALUE': {
-      let oldEditValue = state.record.editValues[action.field];
-      let newEditValue = {
+      const oldEditValue = state.record.editValues[action.field];
+      const newEditValue = {
         ...oldEditValue,
         current: action.value
       };
 
-      console.log('NEW EDIT VALUE: ' + JSON.stringify(newEditValue));
-      console.log('ACTION FIELD: ' + action.field);
+      console.log(`NEW EDIT VALUE: ${JSON.stringify(newEditValue)}`);
+      console.log(`ACTION FIELD: ${action.field}`);
 
-      var updateMap = {};
+      const updateMap = {};
       updateMap[action.field] = newEditValue;
-      console.log('UPDATE: ' + JSON.stringify(updateMap));
+      console.log(`UPDATE: ${JSON.stringify(updateMap)}`);
 
-      let newEditValues = Object.assign({}, state.record.editValues, updateMap);
+      const newEditValues = Object.assign({}, state.record.editValues, updateMap);
 
       return {
         ...state,

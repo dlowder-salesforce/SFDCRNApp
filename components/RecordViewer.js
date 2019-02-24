@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Text, View, ScrollView } from 'react-native';
+import { View } from 'react-native';
 
 import Login from './Login';
 import RecentItemListUpdater from '../containers/RecentItemListUpdater';
@@ -26,9 +26,9 @@ const RecordViewer = ({
   onFetchPicklist,
   onFetchRecentItems
 }) => {
-  if (screen == 'LOGIN') {
+  if (screen === 'LOGIN') {
     return <Login onSuccess={onLoginSuccess} />;
-  } else if (screen == 'RECORD') {
+  } else if (screen === 'RECORD') {
     return (
       <Record
         recordView={record}
@@ -43,7 +43,7 @@ const RecordViewer = ({
         onFetchPicklist={onFetchPicklist}
       />
     );
-  } else if (screen == 'RECENT') {
+  } else if (screen === 'RECENT') {
     console.log('SHOW RECENT');
     return (
       <View key="RecentItemsScreen">

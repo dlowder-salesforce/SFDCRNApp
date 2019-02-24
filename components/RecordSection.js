@@ -14,30 +14,28 @@ const RecordSection = ({
   onFetchPicklist,
   mode,
   index
-}) => {
-  return (
-    <View key={'sectionView' + index} style={Styles.section}>
-      {section.useHeading && (
-        <Text key={'sectionHeading' + index} style={Styles.sectionHeader}>
-          {section.heading}
-        </Text>
+}) => (
+  <View key={`sectionView${index}`} style={Styles.section}>
+    {section.useHeading && (
+    <Text key={`sectionHeading${index}`} style={Styles.sectionHeader}>
+      {section.heading}
+    </Text>
       )}
-      {section.rows.map((row, i) => (
-        <RecordRow
-          key={'sectionRow' + index + ',' + i}
-          mode={mode}
-          picklists={picklists}
-          onFieldValueUpdate={onFieldValueUpdate}
-          onFetchPicklist={onFetchPicklist}
-          editValues={editValues}
-          row={row}
-          sectionIndex={index}
-          rowIndex={i}
-        />
+    {section.rows.map((row, i) => (
+      <RecordRow
+        key={`sectionRow${index},${i}`}
+        mode={mode}
+        picklists={picklists}
+        onFieldValueUpdate={onFieldValueUpdate}
+        onFetchPicklist={onFetchPicklist}
+        editValues={editValues}
+        row={row}
+        sectionIndex={index}
+        rowIndex={i}
+      />
       ))}
-    </View>
+  </View>
   );
-};
 
 RecordSection.propTypes = {
   section: PropTypes.object.isRequired,

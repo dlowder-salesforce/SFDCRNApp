@@ -1,5 +1,3 @@
-import React from 'react';
-import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 
 import {
@@ -32,55 +30,54 @@ const mapStateToProps = state => {
     };
   } else {
     // TODO: Do this based on last fetch time instead.
-    let updateItems =
+    const updateItems =
       'recentItems' in state.recentitems
-        ? state.recentitems.recentItems.length == 0
+        ? state.recentitems.recentItems.length === 0
         : false;
 
     return {
       screen: 'RECENT',
-      updateItems: updateItems,
+      updateItems,
       recentItems: state.recentitems,
       creds: state.login
     };
   }
 };
 
-const mapDispatchToProps = dispatch => {
-  return {
-    onLoginSuccess: (accessToken, instanceUrl) => {
-      dispatch(finishLogin(accessToken, instanceUrl));
-    },
-    onRecordClick: (creds, id) => {
-      dispatch(fetchRecord(creds, id));
-    },
-    onDeleteClick: (creds, id) => {
-      dispatch(deleteRecord(creds, id));
-    },
-    onEditClick: () => {
-      dispatch(editRecord());
-    },
-    onSaveClick: (creds, id, editValues) => {
-      console.log('DISPATCHING SAVE RECORD MESSAGE');
-      dispatch(saveRecord(creds, id, editValues));
-    },
-    onFetchRecentItems: creds => {
-      dispatch(fetchRecentItems(creds));
-    },
-    onBackClick: () => {
-      dispatch(clearRecord());
-    },
-    onFieldValueUpdate: (field, value) => {
-      dispatch(updateFieldValue(field, value));
-    },
-    onFetchPicklist: (creds, url) => {
-      dispatch(fetchPicklist(creds, url));
-    }
-  };
-};
+const mapDispatchToProps = dispatch => ({
+  onLoginSuccess: (accessToken, instanceUrl) => {
+    dispatch(finishLogin(accessToken, instanceUrl));
+  },
+  onRecordClick: (creds, id) => {
+    dispatch(fetchRecord(creds, id));
+  },
+  onDeleteClick: (creds, id) => {
+    dispatch(deleteRecord(creds, id));
+  },
+  onEditClick: () => {
+    dispatch(editRecord());
+  },
+  onSaveClick: (creds, id, editValues) => {
+    console.log('DISPATCHING SAVE RECORD MESSAGE');
+    dispatch(saveRecord(creds, id, editValues));
+  },
+  onFetchRecentItems: creds => {
+    dispatch(fetchRecentItems(creds));
+  },
+  onBackClick: () => {
+    dispatch(clearRecord());
+  },
+  onFieldValueUpdate: (field, value) => {
+    dispatch(updateFieldValue(field, value));
+  },
+  onFetchPicklist: (creds, url) => {
+    dispatch(fetchPicklist(creds, url));
+  }
+});
 
-const RecordViewerWrapper = connect(mapStateToProps, mapDispatchToProps)(
-  RecordViewer
-);
+const RecordViewerWrapper = connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(RecordViewer);
 
 export default RecordViewerWrapper;

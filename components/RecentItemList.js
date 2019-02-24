@@ -7,22 +7,20 @@ import Styles from '../Styles';
 
 // Component that displays a list of recent items and supports a hook for handling a click
 // on one of them.
-const RecentItemList = ({ creds, onClick, recentItems }) => {
-  return (
-    <View style={Styles.container}>
-      <Text style={Styles.title}>Recent Items</Text>
-      {recentItems.recentItems.map((recentItem, index) => (
-        <RecentItem
-          creds={creds}
-          index={index}
-          key={'RecentItem' + recentItem.Id}
-          onClick={() => onClick(creds, recentItem.Id)}
-          item={recentItem}
-        />
+const RecentItemList = ({ creds, onClick, recentItems }) => (
+  <View style={Styles.container}>
+    <Text style={Styles.title}>Recent Items</Text>
+    {recentItems.recentItems.map((recentItem, index) => (
+      <RecentItem
+        creds={creds}
+        index={index}
+        key={`RecentItem${recentItem.Id}`}
+        onClick={() => onClick(creds, recentItem.Id)}
+        item={recentItem}
+      />
       ))}
-    </View>
+  </View>
   );
-};
 
 RecentItemList.propTypes = {
   creds: PropTypes.object.isRequired,

@@ -89,6 +89,7 @@
   "rules": {
     "react/jsx-filename-extension": [1, { "extensions": [".js", ".jsx"] }],
     "react/forbid-prop-types": 0,
+    "react/no-array-index-key": 0,
     "comma-dangle": 0, // disallow trailing commas in object literals
     "no-cond-assign": 1, // disallow assignment in conditional expressions
     "no-console": 0, // disallow use of console (off by default in the node environment)

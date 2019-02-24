@@ -15,40 +15,40 @@ const RecordItem = ({
   rowLabel,
   itemIndex
 }) => {
-  let itemLabel = rowLabel + ',' + itemIndex;
+  const itemLabel = `${rowLabel},${itemIndex}`;
 
-  let nonEmptyItem = item.values.find(
+  const nonEmptyItem = item.values.find(
     component => component.displayValue && component.displayValue.length > 0
   );
 
   return (
-    <View key={'item' + itemLabel}>
+    <View key={`item${itemLabel}`}>
       {!item.customLinkUrl && (
-        <Text key={'label' + itemLabel} style={Styles.label}>
+        <Text key={`label${itemLabel}`} style={Styles.label}>
           {item.label}
         </Text>
       )}
       {item.customLinkUrl && (
-        <Text key={'customLink' + itemLabel}>
-          {item.linkText + ' ' + item.customLinkUrl}
+        <Text key={`customLink${itemLabel}`}>
+          {`${item.linkText} ${item.customLinkUrl}`}
         </Text>
       )}
 
       {mode === 'View' &&
-        item.linkId && <Text key={'linkTo' + itemLabel}>{item.linkId}</Text>}
+        item.linkId && <Text key={`linkTo${itemLabel}`}>{item.linkId}</Text>}
       {mode === 'View' &&
         !item.linkId &&
         !item.customLinkUrl &&
-        !nonEmptyItem && <Text key={'componentEmpty' + itemLabel}>-</Text>}
+        !nonEmptyItem && <Text key={`componentEmpty${itemLabel}`}>-</Text>}
       {mode === 'View' &&
         !item.linkId &&
         !item.customLinkUrl &&
         nonEmptyItem && (
-          <View key={'compList' + itemLabel}>
+          <View key={`compList${itemLabel}`}>
             {item.values.map((component, i) => {
               if (component.displayValue && component.displayValue.length > 0) {
                 return (
-                  <Text key={'component' + itemLabel + ',' + i}>
+                  <Text key={`component${itemLabel},${i}`}>
                     {component.displayValue}
                   </Text>
                 );
@@ -60,7 +60,7 @@ const RecordItem = ({
         )}
 
       {mode === 'Edit' && (
-        <View key={'compListEdit' + itemLabel}>
+        <View key={`compListEdit${itemLabel}`}>
           {item.values.map((component, i) => {
             if (component.editableForUpdate) {
               if (component.picklistUrl) {
@@ -73,7 +73,7 @@ const RecordItem = ({
                   return (
                     <View
                       style={Styles.picklistMask}
-                      key={component.picklistUrl + 'View'}
+                      key={`${component.picklistUrl}View`}
                     >
                       <Picker
                         style={Styles.picklist}
@@ -83,16 +83,14 @@ const RecordItem = ({
                           onFieldValueUpdate(component.field, newValue)
                         }
                       >
-                        {picklistValues.map(picklistValue => {
-                          return (
-                            <Picker.Item
-                              style={Styles.picklistItem}
-                              key={picklistValue.value}
-                              value={picklistValue.value}
-                              label={picklistValue.label}
-                            />
-                          );
-                        })}
+                        {picklistValues.map(picklistValue => (
+                          <Picker.Item
+                            style={Styles.picklistItem}
+                            key={picklistValue.value}
+                            value={picklistValue.value}
+                            label={picklistValue.label}
+                          />
+                          ))}
                       </Picker>
                     </View>
                   );
@@ -102,13 +100,13 @@ const RecordItem = ({
                   onFetchPicklist(component.picklistUrl);
 
                   return (
-                    <Text key={'component' + itemLabel + ',' + i}>
+                    <Text key={`component${itemLabel},${i}`}>
                       {component.displayValue}
                     </Text>
                   );
                 }
               } else {
-                let currentVal = editValues[component.field].current;
+                const currentVal = editValues[component.field].current;
                 let currentValStr = null;
                 if (currentVal != null) {
                   currentValStr = currentVal.toString();
@@ -117,7 +115,7 @@ const RecordItem = ({
                 return (
                   <TextInput
                     style={Styles.fieldInput}
-                    key={'componentInput' + itemLabel + ',' + i}
+                    key={`componentInput${itemLabel},${i}`}
                     onChangeText={text =>
                       onFieldValueUpdate(component.field, text)
                     }
@@ -127,7 +125,7 @@ const RecordItem = ({
               }
             } else {
               return (
-                <Text key={'component' + itemLabel + ',' + i}>
+                <Text key={`component${itemLabel},${i}`}>
                   {component.displayValue}
                 </Text>
               );

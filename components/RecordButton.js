@@ -5,15 +5,13 @@ import { TouchableHighlight, Text, View } from 'react-native';
 import Styles from '../Styles';
 
 // Component that displays a button at the top of a record.
-const RecordButton = ({ onClick, label }) => {
-  return (
-    <TouchableHighlight onPress={onClick}>
-      <View>
-        <Text style={Styles.button}>{label}</Text>
-      </View>
-    </TouchableHighlight>
+const RecordButton = ({ onClick, label }) => (
+  <TouchableHighlight onPress={onClick}>
+    <View>
+      <Text style={Styles.button}>{label}</Text>
+    </View>
+  </TouchableHighlight>
   );
-};
 
 RecordButton.propTypes = {
   label: PropTypes.string.isRequired,

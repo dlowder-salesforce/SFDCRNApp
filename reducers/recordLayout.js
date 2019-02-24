@@ -1,37 +1,33 @@
 function getLayoutItemModel(objectInfo, record, recordType, item) {
-  var result = {};
+  const result = {};
   result.label = item.label;
 
-  var values = [];
-  var linkId;
-  var linkText;
-  var customLinkUrl;
-  var customText;
+  const values = [];
+  let linkId;
+  let linkText;
+  let customLinkUrl;
+  let customText;
 
-  (item.layoutComponents || []).forEach(function(component) {
-    let picklistUrl = undefined;
+  (item.layoutComponents || []).forEach(component => {
+    let picklistUrl;
 
     // Component display info.
-    if (component.componentType == 'Field') {
-      var compValue = component.apiName;
-      var fieldInfo = objectInfo.fields[compValue];
+    if (component.componentType === 'Field') {
+      const compValue = component.apiName;
+      const fieldInfo = objectInfo.fields[compValue];
 
       // Picklist value URL.
-      if (fieldInfo && fieldInfo.dataType == 'Picklist') {
-        picklistUrl =
-          '/services/data/v41.0/ui-api/object-info/' +
-          objectInfo.apiName +
-          '/picklist-values/' +
-          recordType +
-          '/' +
-          fieldInfo.apiName;
+      if (fieldInfo && fieldInfo.dataType === 'Picklist') {
+        picklistUrl = `/services/data/v41.0/ui-api/object-info/${
+          objectInfo.apiName
+        }/picklist-values/${recordType}/${fieldInfo.apiName}`;
       }
 
       // Reference link.
       if (fieldInfo && fieldInfo.reference) {
         // The relationship may be absent if it amounts to null.
         if (record.fields[fieldInfo.relationshipName]) {
-          var relatedData = record.fields[fieldInfo.relationshipName].value;
+          const relatedData = record.fields[fieldInfo.relationshipName].value;
           if (relatedData) {
             linkId = relatedData.fields.Id.value;
             linkText = relatedData.fields.Name.value;
@@ -41,10 +37,10 @@ function getLayoutItemModel(objectInfo, record, recordType, item) {
 
       if (
         fieldInfo &&
-        (fieldInfo.type == 'Datetime' || fieldInfo.type == 'DateOnly')
+        (fieldInfo.type === 'Datetime' || fieldInfo.type === 'DateOnly')
       ) {
-        var currValue = record.fields[compValue].value;
-        var formattedData = new Date(currValue);
+        const currValue = record.fields[compValue].value;
+        const formattedData = new Date(currValue);
         values.push({
           displayValue: formattedData,
           value: currValue,
@@ -54,16 +50,16 @@ function getLayoutItemModel(objectInfo, record, recordType, item) {
           picklistUrl,
           editableForNew: item.editableForNew,
           editableForUpdate: item.editableForUpdate,
-          isNull: currValue == null
+          isNull: currValue === null
         });
       } else if (record.fields[compValue]) {
-        var displayValue = record.fields[compValue].displayValue;
-        let rawValue = record.fields[compValue].value;
-        if (displayValue == null && rawValue != null) {
+        let displayValue = record.fields[compValue].displayValue;
+        const rawValue = record.fields[compValue].value;
+        if (displayValue === null && rawValue !== null) {
           displayValue = rawValue.toString();
         }
         values.push({
-          displayValue: displayValue,
+          displayValue,
           value: rawValue,
           label: component.label,
           field: compValue,
@@ -71,22 +67,22 @@ function getLayoutItemModel(objectInfo, record, recordType, item) {
           picklistUrl,
           editableForNew: item.editableForNew,
           editableForUpdate: item.editableForUpdate,
-          isNull: displayValue == null
+          isNull: displayValue === null
         });
       } else {
-        console.log('Missing expected field: ' + compValue);
+        console.log(`Missing expected field: ${compValue}`);
       }
-    } else if (component.componentType == 'CustomLink') {
+    } else if (component.componentType === 'CustomLink') {
       customLinkUrl = component.customLinkUrl;
       linkText = component.label;
-    } else if (component.componentType == 'Canvas') {
-      customText = 'Canvas: ' + component.apiName;
-    } else if (component.componentType == 'EmptySpace') {
+    } else if (component.componentType === 'Canvas') {
+      customText = `Canvas: ${component.apiName}`;
+    } else if (component.componentType === 'EmptySpace') {
       customText = '';
-    } else if (component.componentType == 'VisualforcePage') {
-      customText = 'VF Page: ' + component.apiName;
-    } else if (component.componentType == 'ReportChart') {
-      customText = 'Report Chart: ' + component.apiName;
+    } else if (component.componentType === 'VisualforcePage') {
+      customText = `VF Page: ${component.apiName}`;
+    } else if (component.componentType === 'ReportChart') {
+      customText = `Report Chart: ${component.apiName}`;
     }
   });
 
@@ -100,25 +96,25 @@ function getLayoutItemModel(objectInfo, record, recordType, item) {
 }
 
 function getLayoutRowModel(objectInfo, record, recordType, itemsIn) {
-  var items = [];
+  const items = [];
 
-  (itemsIn || []).forEach(function(item) {
+  (itemsIn || []).forEach(item => {
     items.push(getLayoutItemModel(objectInfo, record, recordType, item));
   });
 
-  var result = {
-    items: items
+  const result = {
+    items
   };
   return result;
 }
 
 function getLayoutSectionModel(objectInfo, record, recordType, section) {
-  var result = {};
+  const result = {};
   result.heading = section.heading;
   result.useHeading = section.useHeading ? section.useHeading : false;
 
-  var rows = [];
-  (section.layoutRows || []).forEach(function(row) {
+  const rows = [];
+  (section.layoutRows || []).forEach(row => {
     rows.push(
       getLayoutRowModel(objectInfo, record, recordType, row.layoutItems)
     );
@@ -129,21 +125,21 @@ function getLayoutSectionModel(objectInfo, record, recordType, section) {
 }
 
 function getLayoutModelForDefaults(defaults) {
-  let objectInfo = defaults.objectInfo;
-  let record = defaults.record;
-  let layout = defaults.layout;
+  const objectInfo = defaults.objectInfo;
+  const record = defaults.record;
+  const layout = defaults.layout;
 
   let recordType = '012000000000000AAA'; // 'Master'
   if (record.recordTypeInfo) {
     recordType = record.recordTypeInfo.recordTypeId;
   }
 
-  let layouts = {};
-  let editValues = {};
+  const layouts = {};
+  const editValues = {};
 
   try {
-    let modeType = layout.mode;
-    let layoutType = layout.layoutType;
+    const modeType = layout.mode;
+    const layoutType = layout.layoutType;
 
     layouts[layoutType] = {};
 
@@ -165,7 +161,7 @@ function getLayoutModelForDefaults(defaults) {
     );
     layouts[layoutType][modeType] = sections;
 
-    let result = {
+    const result = {
       layouts,
       editValues,
       objectInfo,
@@ -173,19 +169,19 @@ function getLayoutModelForDefaults(defaults) {
     };
     return result;
   } catch (err) {
-    console.log('ERROR CREATING DEFAULTS LAYOUT MODEL ' + err);
+    console.log(`ERROR CREATING DEFAULTS LAYOUT MODEL ${err}`);
     return { layouts: [], editValues: {}, objectInfo: {}, apiName: null };
   }
 }
 
 function getLayoutModel(recordId, recordView) {
   console.log('step 1');
-  let record = recordView.records[recordId];
-  let apiName = record.apiName;
+  const record = recordView.records[recordId];
+  const apiName = record.apiName;
 
   console.log('step 2');
-  let entityEntry = recordView.layouts[apiName];
-  let objectInfo = recordView.objectInfos[apiName];
+  const entityEntry = recordView.layouts[apiName];
+  const objectInfo = recordView.objectInfos[apiName];
 
   console.log('step 3');
 
@@ -194,17 +190,17 @@ function getLayoutModel(recordId, recordView) {
     recordType = record.recordTypeInfo.recordTypeId;
   }
 
-  let layouts = {};
-  let editValues = {};
+  const layouts = {};
+  const editValues = {};
 
   console.log('step 4');
 
   try {
-    let recordTypeRep = entityEntry[Object.keys(entityEntry)[0]]; // TODO: support multiple record types.
+    const recordTypeRep = entityEntry[Object.keys(entityEntry)[0]]; // TODO: support multiple record types.
     for (const layoutType of Object.keys(recordTypeRep)) {
-      let layoutTypeRep = recordTypeRep[layoutType];
+      const layoutTypeRep = recordTypeRep[layoutType];
       for (const modeType of Object.keys(layoutTypeRep)) {
-        let layoutRep = layoutTypeRep[modeType];
+        const layoutRep = layoutTypeRep[modeType];
         if (!layouts[layoutType]) {
           layouts[layoutType] = {};
         }
@@ -237,7 +233,7 @@ function getLayoutModel(recordId, recordView) {
     }
 
     console.log('step 6');
-    let result = {
+    const result = {
       layouts,
       editValues,
       objectInfo,
@@ -245,7 +241,7 @@ function getLayoutModel(recordId, recordView) {
     };
     return result;
   } catch (err) {
-    console.log('ERROR CREATING LAYOUT MODEL ' + err);
+    console.log(`ERROR CREATING LAYOUT MODEL ${err}`);
     return { layouts: [], editValues: {}, objectInfo: {}, recordId: null };
   }
 }

@@ -50,19 +50,19 @@ const Styles = StyleSheet.create({
   picklistOuter: {
     flex: 1,
     backgroundColor: '#F5FCFF'
-    //paddingTop: 50
+    // paddingTop: 50
   },
   picklistMask: {
-    //height: 40,
-    //overflow: 'hidden',
-    //justifyContent: 'space-around'
+    // height: 40,
+    // overflow: 'hidden',
+    // justifyContent: 'space-around'
   },
   picklist: {
     padding: 0,
     margin: 0,
-    //height: 75,
+    // height: 75,
     borderWidth: 1
-    //borderColor: 'red'
+    // borderColor: 'red'
   },
   picklistItem: {
     flex: 1,
