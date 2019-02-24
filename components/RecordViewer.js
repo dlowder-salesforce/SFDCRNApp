@@ -1,47 +1,66 @@
-import React, { PropTypes } from 'react'
+import React, { PropTypes } from 'react';
 import { Text, View, ScrollView } from 'react-native';
 
-import Login from './Login'
-import RecentItemListUpdater from '../containers/RecentItemListUpdater'
-import RecentItemList from './RecentItemList'
-import Record from './Record'
+import Login from './Login';
+import RecentItemListUpdater from '../containers/RecentItemListUpdater';
+import RecentItemList from './RecentItemList';
+import Record from './Record';
 
 // Component that displays login / recent items / record screens.
-const RecordViewer = ({screen, updateItems, creds, record, mode, picklists, recentItems, onLoginSuccess, onRecordClick, onBackClick, onDeleteClick, onEditClick, onSaveClick, onFieldValueUpdate, onFetchPicklist, onFetchRecentItems}) => {
+const RecordViewer = ({
+  screen,
+  updateItems,
+  creds,
+  record,
+  mode,
+  picklists,
+  recentItems,
+  onLoginSuccess,
+  onRecordClick,
+  onBackClick,
+  onDeleteClick,
+  onEditClick,
+  onSaveClick,
+  onFieldValueUpdate,
+  onFetchPicklist,
+  onFetchRecentItems
+}) => {
   if (screen == 'LOGIN') {
-    return (
-      <Login onSuccess={onLoginSuccess} />
-    )
+    return <Login onSuccess={onLoginSuccess} />;
   } else if (screen == 'RECORD') {
     return (
-      <Record recordView={record}
-              mode={mode}
-              creds={creds}
-              picklists={picklists}
-              onBackClick={onBackClick}
-              onDeleteClick={onDeleteClick}
-              onEditClick={onEditClick}
-              onSaveClick={onSaveClick}
-              onFieldValueUpdate={onFieldValueUpdate}
-              onFetchPicklist={onFetchPicklist}/>
-    )
+      <Record
+        recordView={record}
+        mode={mode}
+        creds={creds}
+        picklists={picklists}
+        onBackClick={onBackClick}
+        onDeleteClick={onDeleteClick}
+        onEditClick={onEditClick}
+        onSaveClick={onSaveClick}
+        onFieldValueUpdate={onFieldValueUpdate}
+        onFetchPicklist={onFetchPicklist}
+      />
+    );
   } else if (screen == 'RECENT') {
-    console.log('SHOW RECENT')
+    console.log('SHOW RECENT');
     return (
-      <View key='RecentItemsScreen'>
-        {updateItems &&
+      <View key="RecentItemsScreen">
+        {updateItems && (
           <RecentItemListUpdater
             creds={creds}
-            onFetchRecentItems={onFetchRecentItems} />
-        }
+            onFetchRecentItems={onFetchRecentItems}
+          />
+        )}
         <RecentItemList
-           creds={creds}
-           recentItems={recentItems}
-           onClick={onRecordClick} />
+          creds={creds}
+          recentItems={recentItems}
+          onClick={onRecordClick}
+        />
       </View>
-    )
+    );
   }
-}
+};
 
 RecordViewer.propTypes = {
   screen: PropTypes.string.isRequired,
@@ -60,6 +79,6 @@ RecordViewer.propTypes = {
   onFetchRecentItems: PropTypes.func.isRequired,
   onFieldValueUpdate: PropTypes.func.isRequired,
   onFetchPicklist: PropTypes.func.isRequired
-}
+};
 
-export default RecordViewer
+export default RecordViewer;

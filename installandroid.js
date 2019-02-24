@@ -42,6 +42,6 @@ execSync(
 
 console.log('Fix name collision in package.json from the iOS and Android SDKs');
 execSync(
-  "sed -i \'\' \'s/SalesforceReact\"/SalesforceReactAndroid\"/g;\' mobile_sdk/SalesforceMobileSDK-Android/libs/SalesforceReact/package.json",
+  "sed -i '' 's/SalesforceReact\"/SalesforceReactAndroid\"/g;' mobile_sdk/SalesforceMobileSDK-Android/libs/SalesforceReact/package.json",
   { stdio: [0, 1, 2] }
 );

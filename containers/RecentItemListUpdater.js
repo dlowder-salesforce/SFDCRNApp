@@ -4,17 +4,17 @@ import React, { PropTypes } from 'react';
 // fetch for recent items.
 class RecentItemListUpdater extends React.Component {
   componentDidMount() {
-    this.props.onFetchRecentItems(this.props.creds)
+    this.props.onFetchRecentItems(this.props.creds);
   }
 
   render() {
-    return null
+    return null;
   }
 }
 
 RecentItemListUpdater.propTypes = {
   creds: React.PropTypes.object.isRequired,
   onFetchRecentItems: React.PropTypes.func.isRequired
-}
+};
 
-export default RecentItemListUpdater
+export default RecentItemListUpdater;

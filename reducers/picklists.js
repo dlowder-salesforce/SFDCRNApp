@@ -4,10 +4,10 @@ const picklists = (state = {}, action) => {
       return {
         ...state,
         [action.url]: action.result
-      }
+      };
     default:
-      return state
+      return state;
   }
-}
+};
 
-export default picklists
+export default picklists;

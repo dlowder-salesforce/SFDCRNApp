@@ -1,13 +1,13 @@
-import { StyleSheet } from 'react-native'
+import { StyleSheet } from 'react-native';
 
 const Styles = StyleSheet.create({
   container: {
     justifyContent: 'center',
-    margin:20
+    margin: 20
   },
   sectionHeader: {
     fontSize: 19,
-    fontWeight: 'bold',
+    fontWeight: 'bold'
   },
   title: {
     fontSize: 18,
@@ -15,18 +15,18 @@ const Styles = StyleSheet.create({
     padding: 10
   },
   buttonBar: {
-    flexDirection:'row'
+    flexDirection: 'row'
   },
   button: {
     padding: 5,
     margin: 5,
-    fontSize:16,
+    fontSize: 16,
     fontWeight: 'bold',
     backgroundColor: 'darkgray'
   },
   label: {
     fontSize: 16,
-    fontWeight: 'bold',
+    fontWeight: 'bold'
   },
   recentItem: {
     fontSize: 17,
@@ -36,8 +36,8 @@ const Styles = StyleSheet.create({
   },
   section: {
     backgroundColor: 'darkseagreen',
-    padding:10,
-    margin:10
+    padding: 10,
+    margin: 10
   },
   outerFrame: {
     margin: 20
@@ -49,7 +49,7 @@ const Styles = StyleSheet.create({
   },
   picklistOuter: {
     flex: 1,
-    backgroundColor: '#F5FCFF',
+    backgroundColor: '#F5FCFF'
     //paddingTop: 50
   },
   picklistMask: {
@@ -61,13 +61,13 @@ const Styles = StyleSheet.create({
     padding: 0,
     margin: 0,
     //height: 75,
-    borderWidth: 1,
+    borderWidth: 1
     //borderColor: 'red'
   },
   picklistItem: {
     flex: 1,
     height: 30
   }
-})
+});
 
-export default Styles
+export default Styles;

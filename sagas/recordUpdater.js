@@ -1,16 +1,18 @@
-import { call, put } from 'redux-saga/effects'
+import { call, put } from 'redux-saga/effects';
 
-import { recordUpdateSuccess } from '../actions'
+import { recordUpdateSuccess } from '../actions';
 
-export default function* recordUpdater (action) {
+export default function* recordUpdater(action) {
+  console.log('UPDATING RECORD!');
 
-  console.log('UPDATING RECORD!')
-
-  let recordDataUrl = action.creds.instanceUrl + '/services/data/v41.0/ui-api/records/' + action.recordId;
+  let recordDataUrl =
+    action.creds.instanceUrl +
+    '/services/data/v41.0/ui-api/records/' +
+    action.recordId;
 
   var recordInput = {};
   recordInput.fields = {};
-  Object.keys(action.editValues).map((field) => {
+  Object.keys(action.editValues).map(field => {
     let editValue = action.editValues[field];
 
     // TODO: Handle different data types and null values properly.
@@ -23,19 +25,20 @@ export default function* recordUpdater (action) {
     method: 'PATCH',
     body: JSON.stringify(recordInput),
     headers: {
-      'Authorization' : 'Bearer ' + action.creds.accessToken,
+      Authorization: 'Bearer ' + action.creds.accessToken,
       'Content-Type': 'application/json',
-      'X-Chatter-Entity-Encoding': false}
+      'X-Chatter-Entity-Encoding': false
+    }
   };
 
   console.log('SENDING PATCH PAYLOAD: ' + req.body);
 
   try {
-    const response = yield call(fetch, recordDataUrl, req)
-    const responseJson = yield response.json()
+    const response = yield call(fetch, recordDataUrl, req);
+    const responseJson = yield response.json();
     console.log('RESPONSE: ' + JSON.stringify(responseJson));
-    yield put(recordUpdateSuccess(responseJson))
-  } catch(err) {
-    console.error('Record update error: ' + JSON.stringify(err))
+    yield put(recordUpdateSuccess(responseJson));
+  } catch (err) {
+    console.error('Record update error: ' + JSON.stringify(err));
   }
 }

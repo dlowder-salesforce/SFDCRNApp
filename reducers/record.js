@@ -1,25 +1,25 @@
-import recordLayout from './recordLayout'
+import recordLayout from './recordLayout';
 
-const record = (state = {record: undefined, mode: 'View'}, action) => {
+const record = (state = { record: undefined, mode: 'View' }, action) => {
   switch (action.type) {
     case 'RECEIVE_RECORD':
       return {
         record: recordLayout.getLayoutModel(action.recordId, action.record),
         mode: 'View'
-      }
+      };
     case 'EDIT_RECORD':
       return {
         ...state,
         mode: 'Edit'
-      }
+      };
     case 'CLEAR_RECORD':
       return {
         record: undefined
-      }
+      };
     case 'FINISHED_RECORD_DELETE':
       return {
         record: undefined
-      }
+      };
     case 'UPDATE_FIELD_VALUE': {
       let oldEditValue = state.record.editValues[action.field];
       let newEditValue = {
@@ -40,18 +40,19 @@ const record = (state = {record: undefined, mode: 'View'}, action) => {
         ...state,
         record: {
           ...state.record,
-          editValues: newEditValues}
-      }
+          editValues: newEditValues
+        }
+      };
     }
     case 'RECORD_UPDATE_SUCCESS': {
       // TODO: Re-retrieve record instead of dropping it.
       return {
         record: undefined
-      }
+      };
     }
     default:
-      return state
+      return state;
   }
-}
+};
 
-export default record
+export default record;
