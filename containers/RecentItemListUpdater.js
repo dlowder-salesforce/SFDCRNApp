@@ -1,4 +1,5 @@
-import React, { PropTypes } from 'react';
+import React from 'react';
+import PropTypes from 'prop-types';
 
 // Component that kicks off an asynchronous
 // fetch for recent items.
@@ -13,8 +14,8 @@ class RecentItemListUpdater extends React.Component {
 }
 
 RecentItemListUpdater.propTypes = {
-  creds: React.PropTypes.object.isRequired,
-  onFetchRecentItems: React.PropTypes.func.isRequired
+  creds: PropTypes.object.isRequired,
+  onFetchRecentItems: PropTypes.func.isRequired
 };
 
 export default RecentItemListUpdater;

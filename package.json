@@ -23,7 +23,7 @@
     "react-navigation": "2.16.0",
     "react-redux": "^6.0.1",
     "redux": "^4.0.1",
-    "redux-saga": "^1.0.1",
+    "redux-saga": "^0.12.1",
     "rimraf": "2.6.2",
     "whatwg-fetch": "^3.0.0"
   },

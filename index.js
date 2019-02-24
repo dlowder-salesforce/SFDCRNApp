@@ -4,4 +4,4 @@
 import { AppRegistry } from 'react-native';
 import Root from './Root';
 
-AppRegistry.registerComponent('ReactNativeViewer', () => Root);
+AppRegistry.registerComponent('SFDCRNApp', () => Root);
