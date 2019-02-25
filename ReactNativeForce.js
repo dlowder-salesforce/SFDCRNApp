@@ -13,15 +13,19 @@ function _promisify(inputFunc) {
     });
 }
 
+const net = {
+  query: _promisify(rawNet.query),
+  describeGlobal: _promisify(rawNet.describeGlobal),
+  sendRequest: _promisify(rawNet.sendRequest),
+  setApiVersion: rawNet.setApiVersion
+};
+
+const oauth = {
+  authenticate: _promisify(rawOAuth.authenticate),
+  getAuthCredentials: _promisify(rawOAuth.getAuthCredentials)
+};
+
 export default {
-  net: {
-    query: _promisify(rawNet.query),
-    describeGlobal: _promisify(rawNet.describeGlobal),
-    sendRequest: _promisify(rawNet.sendRequest),
-    setApiVersion: rawNet.setApiVersion
-  },
-  oauth: {
-    authenticate: _promisify(rawOAuth.authenticate),
-    getAuthCredentials: _promisify(rawOAuth.getAuthCredentials)
-  }
+  oauth,
+  net
 };

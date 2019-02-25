@@ -1,14 +1,26 @@
 import React, { Component } from 'react';
 import { View } from 'react-native';
-import ReactNativeForce from '../ReactNativeForce';
+import rnf from '../ReactNativeForce';
 
 export default class Login extends Component<{
   onSuccess: Function
 }> {
   componentDidMount() {
-    ReactNativeForce.oauth.authenticate().then(creds => {
-      this.props.onSuccess(creds.accessToken, creds.instanceUrl);
-    });
+    rnf.oauth
+      .getAuthCredentials()
+      .then(creds => {
+        this.props.onSuccess(creds.accessToken, creds.instanceUrl);
+      })
+      .catch(e1 => {
+        rnf.oauth
+          .authenticate()
+          .then(creds => {
+            this.props.onSuccess(creds.accessToken, creds.instanceUrl);
+          })
+          .catch(e2 => {
+            console.log(JSON.stringify(e2));
+          });
+      });
   }
 
   render() {
