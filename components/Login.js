@@ -9,7 +9,11 @@ export default class Login extends Component<{
     rnf.oauth
       .getAuthCredentials()
       .then(creds => {
-        this.props.onSuccess(creds.accessToken, creds.instanceUrl);
+        if (creds && creds.accessToken) {
+          this.props.onSuccess(creds.accessToken, creds.instanceUrl);
+        } else {
+          throw new Error('no creds');
+        }
       })
       .catch(e1 => {
         rnf.oauth

@@ -22,7 +22,8 @@ const net = {
 
 const oauth = {
   authenticate: _promisify(rawOAuth.authenticate),
-  getAuthCredentials: _promisify(rawOAuth.getAuthCredentials)
+  getAuthCredentials: _promisify(rawOAuth.getAuthCredentials),
+  logout: _promisify(rawOAuth.logout)
 };
 
 export default {
