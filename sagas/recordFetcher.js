@@ -3,11 +3,11 @@ import { call, put } from 'redux-saga/effects';
 import { receiveRecord } from '../actions';
 
 export default function* recordFetcher(action) {
-  const recordViewUrl =
-    `${action.creds.instanceUrl
-    }/services/data/v41.0/ui-api/record-ui/${
+  const recordViewUrl = `${
+    action.creds.instanceUrl
+  }/services/data/v41.0/ui-api/record-ui/${
     action.recordId
-    }?formFactor=Small&modes=View,Edit`;
+  }?formFactor=Small&modes=View`;
   const req = {
     method: 'GET',
     headers: {
